@@ -1,8 +1,11 @@
-import Navbar from "./components/Navbar";
-import CustomContainer from "./components/ui/CustomContainer";
+import Navbar from "@/components/Navbar";
+import CustomContainer from "@/components/ui/CustomContainer";
 import "./globals.css";
 import { Inter } from "next/font/google";
-
+import { SessionProvider } from "next-auth/react";
+import Providers from "@/utils/Providers";
+import Footer from "@/components/Footer";
+import Toaster from "@/components/Toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -18,10 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CustomContainer>
-          <Navbar />
-          {children}
-        </CustomContainer>
+        <Providers>
+          <CustomContainer>
+            <Navbar />
+            {children}
+          </CustomContainer>
+          <Toaster />
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

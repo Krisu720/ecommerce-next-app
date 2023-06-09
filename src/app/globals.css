@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-.hidenumber {
-    appearance: none;
+.hide-numberinput::-webkit-inner-spin-button {
     -webkit-appearance: none;
+    margin: 0;
 }
