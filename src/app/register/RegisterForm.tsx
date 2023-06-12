@@ -3,6 +3,8 @@
 import { FC, useRef, useState } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import { redirect } from "next/navigation";
+import useToaster from "../login/useToaster";
 
 interface RegisterFormProps {}
 
@@ -11,7 +13,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const repeatPasswordRef = useRef<HTMLInputElement>(null);
 
-  const [error, setError] = useState<string | null>(null);
+  const toast = useToaster();
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,36 +23,36 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
     const repeatPassword = repeatPasswordRef.current?.value;
 
     if (email && password && repeatPassword && password === repeatPassword) {
-      try {
-        const res = await fetch("/api/register", {
-          method: "POST",
-          body: JSON.stringify({ email, password }),
-        });
+      const res = await fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
 
-        if (res.ok) console.log(res);
-      } catch (err: any) {
-        setError(err?.message);
+      if (res.ok) {
+        redirect("/login");
+      } else {
+        toast({ message: "That email can't be used", type: "danger" });
       }
     } else {
-      setError("Passwords are not matching.");
+      toast({ message: "Passwords are not matching", type: "danger" });
     }
   };
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <Input label="Email" placeholer="Email" ref={emailRef} type="email"/>
-      <Input label="Password" placeholer="Password" ref={passwordRef} type="password"/>
+      <Input label="Email" placeholer="Email" ref={emailRef} type="email" />
+      <Input
+        label="Password"
+        placeholer="Password"
+        ref={passwordRef}
+        type="password"
+      />
       <Input
         label="Repeat Password"
         placeholer="Repeat Password"
         ref={repeatPasswordRef}
         type="password"
       />
-      {error && (
-        <div className="bg-red-700 py-3 px-6 rounded-lg mt-6">
-          <p className="text-white">{error}</p>
-        </div>
-      )}
       <Button className="my-8 py-3" type="submit">
         Register
       </Button>

@@ -3,12 +3,14 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 interface InitialState {
   value: {
     message: string;
+    type: "danger" | "success" | null
   };
 }
 
 const initialState: InitialState = {
   value: {
     message: "",
+    type: null
   },
 };
 
@@ -16,9 +18,10 @@ const toaster = createSlice({
   name: "toaster",
   initialState,
   reducers: {
-    toast(state, action: PayloadAction<{ message: string }>) {
+    showToast(state, action: PayloadAction<{ message: string,type: "danger" | "success" }>) {
       return {
         value: {
+          type:action.payload.type,
           message: action.payload.message,
         },
       };
@@ -27,11 +30,12 @@ const toaster = createSlice({
       return {
         value: {
           message: "",
+          type: null
         },
       };
     },
   },
 });
 
-export const { toast, hideToast } = toaster.actions;
+export const { showToast, hideToast } = toaster.actions;
 export default toaster.reducer;

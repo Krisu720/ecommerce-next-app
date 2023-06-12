@@ -1,5 +1,7 @@
-import { getProductById } from "@/utils/getProductById";
+import { getProductById } from "@/lib/getProductById";
 import ProductInfoSection from "./ProductInfoSection";
+import { AnimatePresence, motion } from "framer-motion";
+import Slider from "./Slider";
 
 const array = [1, 2, 3, 4];
 
@@ -11,18 +13,11 @@ const page = async ({ params }: { params: { id: string } }) => {
       <div className="flex flex-col md:flex-row">
         <div className="md:w-1/2 w-full p-12">
           <div className="bg-gray-100 rounded-xl">
-            <img src={product?.image} alt="headphones" />
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
-            {array.map(({}) => (
-              <div className="bg-gray-100 rounded-xl ">
-                <img src={product?.image} alt="headphones" />
-              </div>
-            ))}
+            {product?.image && <Slider image={product.image} />}
           </div>
         </div>
         <div className="md:w-1/2 w-full p-12">
-              <ProductInfoSection product={product}/>
+          <ProductInfoSection product={product} />
         </div>
       </div>
     </div>

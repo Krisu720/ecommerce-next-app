@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { prisma } from "../utils/prismaSingleton";
+import { prisma } from "./prismaSingleton";
 import { compare,hash } from "bcrypt";
 
 interface UserClient {

@@ -1,4 +1,4 @@
-import { prisma } from "@/utils/prismaSingleton";
+import { prisma } from "@/lib/prismaSingleton";
 import { hash } from "bcrypt";
 import { NextResponse } from "next/server";
 
@@ -14,8 +14,14 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json({ email });
-  } catch (e) {
-    return NextResponse.json({ message: e });
+    return NextResponse.json({
+      user: {
+        email: user.email,
+      },
+    });
+  } catch (e: any) {
+    return new NextResponse(JSON.stringify({ error: e.message }), {
+      status: 500,
+    });
   }
 }

@@ -1,6 +1,6 @@
 import Card from "@/components/Card";
 import Button from "@/components/ui/Button";
-import getProducts from "@/utils/getProducts";
+import getProducts from "@/lib/getProducts";
 import Banner from "./Banner";
 
 const page = async ({}) => {

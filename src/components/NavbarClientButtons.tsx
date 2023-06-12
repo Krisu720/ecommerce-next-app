@@ -49,7 +49,7 @@ const NavbarClientButtons: FC<NavbarClientButtonsProps> = ({ session }) => {
                 </DropdownMenu.Item>
                 <DropdownMenu.Item className="outline-none w-full">
                   <button
-                    onClick={() => signOut()}
+                    onClick={() => signOut({redirect:true,callbackUrl:"/"})}
                     className="flex w-full items-center gap-1 hover:bg-gray-200 p-2 rounded"
                   >
                     <ArrowRightOnRectangleIcon className="h-6 w-6" />

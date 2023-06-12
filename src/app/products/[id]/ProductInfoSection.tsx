@@ -11,14 +11,20 @@ import { useDispatch } from "react-redux/es/exports";
 import { addToCart } from "@/redux/cart-slice";
 import { AppDispatch } from "@/redux/store";
 import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/react/24/outline";
-import { hideToast, toast } from "@/redux/toaster-slice";
+import { hideToast } from "@/redux/toaster-slice";
+import useToaster from "@/app/login/useToaster";
+import { redirect} from "next/navigation"
+import { useSession } from "next-auth/react";
 interface ProductInfoSectionProps {
   product: Product | null;
 }
 
 const ProductInfoSection: FC<ProductInfoSectionProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
-  
+  const toast = useToaster()
+  const session = useSession()
+
+
   const [amount, setAmount] = useState<number>(1);
 
   const addAmount = (): void => {
@@ -30,10 +36,13 @@ const ProductInfoSection: FC<ProductInfoSectionProps> = ({ product }) => {
 
   const addProduct = (): void => {
     if (product) {
-      
-      dispatch(addToCart({ ...product, amount }));
-      dispatch(toast({ message: "Dodano produkt" }));
-      setTimeout(() => dispatch(hideToast()), 3000);
+      if(session.status === "authenticated") {
+        dispatch(addToCart({ ...product, amount }));
+        toast({message: "Added product to cart",type:"success"})
+      } else {
+        toast({message: "You need to log in",type: "danger"})
+        redirect("/login")
+      }
     }
   };
 

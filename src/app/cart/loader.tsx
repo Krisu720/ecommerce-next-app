@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
-interface loaderProps {
+interface LoaderProps {
   
 }
 
-const loader: FC<loaderProps> = ({}) => {
+const Loader: FC<LoaderProps> = ({}) => {
   return <div>loading...</div>
 }
 
-export default loader
+export default Loader
