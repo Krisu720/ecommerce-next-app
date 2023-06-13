@@ -7,6 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>,VariantPro
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  href?: string;
 }
 
 export const buttonVariants = cva(
@@ -35,8 +36,22 @@ const Button: FC<ButtonProps> = ({
   onClick,
   variant,
   size,
+  href,
   ...props
 }) => {
+
+  if(href) {
+ return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={cn(buttonVariants({ variant, size, className }))}
+    >
+      {children}
+    </Link>
+  );
+  } else {
+
   return (
     <button
       {...props}
@@ -47,5 +62,7 @@ const Button: FC<ButtonProps> = ({
     </button>
   );
 };
+  }
+
 
 export default Button;

@@ -77,7 +77,7 @@ const page: FC<pageProps> = ({}) => {
   console.log("Parent refresh");
 
   return (
-    <div className="md:flex">
+    <div className="md:flex md:min-h-screen">
       <div className="md:w-2/3">
         <div className="border rounded-xl border-gray-200 p-5">
           <h1 className="font-bold text-2xl">Items</h1>
@@ -150,7 +150,6 @@ const page: FC<pageProps> = ({}) => {
                     Pay {getSubtotal(cart)}zł
                   </Button>
                 </Dialog.Trigger>
-                {}
                 <DemoDialog {...finalObject} />
               </Dialog.Root>
             </div>

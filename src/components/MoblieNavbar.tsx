@@ -28,7 +28,7 @@ const MoblieNavbar: FC<MoblieNavbarProps> = ({ navs }) => {
           animate={{opacity:1,x:0}}
           transition={{type: "tween"}}
           exit={{opacity:0,x:400}}
-          className="fixed top-0 right-0 h-screen bg-white min-w-[20rem] shadow-2xl">
+          className="fixed top-0 right-0 h-screen bg-white min-w-[20rem] shadow-2xl z-50">
             <div className="relative h-full">
               <button
                 className="right-3 top-5 absolute z-10"

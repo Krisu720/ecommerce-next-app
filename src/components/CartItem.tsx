@@ -4,6 +4,7 @@ import { changeAmount, getSubtotal, removeFromCart } from "@/redux/cart-slice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { ReduxProduct } from "@/types/types";
+import { Trash2 } from "lucide-react";
 
 interface CartItemProps extends ReduxProduct {}
 
@@ -31,6 +32,7 @@ const CartItem: FC<CartItemProps> = ({
         <h1 className="font-bold">{title}</h1>
         <h1 className="text-gray-500 text-sm">{description}</h1>
       </div>
+
       <div className="flex flex-col items-end">
         <p className="font-bold">{amount * price}zł</p>
         <div className="flex">
@@ -58,6 +60,12 @@ const CartItem: FC<CartItemProps> = ({
             <PlusSmallIcon className="h-4 w-4" />
           </button>
         </div>
+        <button
+          className="my-2 bg-red-500 text-white hover:bg-red-300 transition-colors rounded p-1 w-full flex justify-center"
+          onClick={() => dispatch(removeFromCart({ uuid }))}
+        >
+          <Trash2 className="h-4 w-4" />
+        </button>
       </div>
     </div>
   );

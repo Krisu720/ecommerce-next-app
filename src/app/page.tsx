@@ -1,3 +1,4 @@
+import Blob from "@/components/Blob";
 import Card from "@/components/Card";
 import Button from "@/components/ui/Button";
 import getProducts from "@/lib/getProducts";
@@ -7,15 +8,15 @@ const Home = async () => {
   const products = await getProducts();
   return (
     <main>
-      <div className="md:h-[45rem] flex md:flex-row flex-col items-center">
-        <div className="md:order-1 order-2 my-12 md:my-0">
+      <div className="md:h-[45rem] flex md:flex-row flex-col items-center relative ">
+        <div className="md:order-1 order-2 my-12 md:my-0 z-20">
           <h1 className="text-5xl font-extrabold tracking-tight">
-            Increase your gaming <span className="text-green-800">satisfaction</span>.
+            Increase your gaming <span className="text-green-700">satisfaction</span>.
           </h1>
-          <h2 className="text-lg text-gray-500 font-semibold">
+          <h2 className="text-lg text-gray-700 font-semibold my-2">
             Enjoy playing games using our products available in our store.{" "}
           </h2>
-          <Button className="mt-6 mb-4">Our Products</Button>
+          <Button href="/products">Our Products</Button>
           <div className="flex gap-12 mt-6">
             <div className="flex gap-2">
               <BadgeDollarSign  className="text-green-800"/>
@@ -27,9 +28,10 @@ const Home = async () => {
             </div>
           </div>
         </div>
-        <div className="md:order-2 order-1 mt-12 md:mt-0">
+        <div className="md:order-2 order-1 mt-12 md:mt-0 z-20">
           <img src="./heroheadset.webp" alt="" />
         </div>
+        <Blob/>
       </div>
       <h1 className="font-extrabold tracking-tighter text-4xl my-3">
         Featured Products

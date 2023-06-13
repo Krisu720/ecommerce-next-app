@@ -22,17 +22,18 @@ interface NavbarClientButtonsProps {
 const NavbarClientButtons: FC<NavbarClientButtonsProps> = ({ session }) => {
   const products = useAppSelector((state) => state.cartReducer.value.products);
   const amount = getAmountOfItems(products);
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <div className="flex gap-2 md:gap-8 mx-3">
       {session ? (
-        <DropdownMenu.Root>
+        <DropdownMenu.Root open={open} onOpenChange={(opened=>setOpen(opened))}>
           <DropdownMenu.Trigger className="outline-none" asChild>
             <button className="flex items-center px-3 py-2 rounded-xl hover:bg-gray-200 transition-colors">
               Account <ChevronDownIcon className="h-6 w-6" />
             </button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Portal className="z-10">
-            <DropdownMenu.Content>
+          <DropdownMenu.Portal >
+            <DropdownMenu.Content className="relative z-50" asChild>
               <motion.div
                 className="mt-2 shadow  bg-white rounded p-2 flex flex-col items-center gap-1"
                 initial={{ opacity: 0, y: 5 }}
@@ -42,6 +43,7 @@ const NavbarClientButtons: FC<NavbarClientButtonsProps> = ({ session }) => {
                   <Link
                     href="/account"
                     className="flex items-center gap-1 hover:bg-gray-200 p-2 rounded"
+                    onClick={()=>setOpen(false)}
                   >
                     <Cog6ToothIcon className="h-6 w-6" />
                     Account settings

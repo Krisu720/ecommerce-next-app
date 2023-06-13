@@ -26,6 +26,7 @@
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "framer-motion": "^10.12.16",
+    "google-map-react": "^2.2.1",
     "lucide-react": "^0.241.0",
     "next": "13.4.3",
     "next-auth": "^4.22.1",
@@ -46,6 +47,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/google-map-react": "^2.1.7",
     "@types/uuid": "^9.0.1"
   }
 }

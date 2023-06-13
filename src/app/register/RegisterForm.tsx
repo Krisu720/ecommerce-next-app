@@ -3,7 +3,6 @@
 import { FC, useRef, useState } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import { redirect } from "next/navigation";
 import useToaster from "../login/useToaster";
 
 interface RegisterFormProps {}
@@ -14,7 +13,6 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
   const repeatPasswordRef = useRef<HTMLInputElement>(null);
 
   const toast = useToaster();
-
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -28,10 +26,10 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (res.ok) {
-        redirect("/login");
-      } else {
+      if (!res.ok) {
         toast({ message: "That email can't be used", type: "danger" });
+      } else {
+        toast({ message: "Account has been created", type: "success" });
       }
     } else {
       toast({ message: "Passwords are not matching", type: "danger" });

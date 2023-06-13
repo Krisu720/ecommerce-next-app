@@ -41,7 +41,7 @@ const DemoDialog: FC<DemoDialogProps> = ({
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="bg-black/30 w-full h-full fixed inset-0" />
-      <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[30rem] h-[40rem] bg-white rounded-3xl z-30 p-5">
+      <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] max-w-[30rem] bg-white rounded-3xl z-30 p-5">
         <Dialog.Title className="text-3xl font-bold">Demo</Dialog.Title>
         <Dialog.Description className="text-gray-500">
           This is demo version of accepting payment in stipe. Click correct
@@ -49,12 +49,14 @@ const DemoDialog: FC<DemoDialogProps> = ({
         </Dialog.Description>
         <p className="mt-4">Object sent to stripe: </p>
         <pre className="bg-black rounded text-white">{codeBlock}</pre>
-        <Dialog.Close>
-          <Button>Success</Button>
-        </Dialog.Close>
-        <Dialog.Close>
-          <Button>Deny</Button>
-        </Dialog.Close>
+        <div className="flex gap-3 w-full mt-6">
+          <Dialog.Close asChild className="w-1/2">
+            <Button>Success</Button>
+          </Dialog.Close>
+          <Dialog.Close asChild className="w-1/2">
+            <Button>Deny</Button>
+          </Dialog.Close>
+        </div>
       </Dialog.Content>
     </Dialog.Portal>
   );

@@ -10,8 +10,8 @@ const page: FC<pageProps> = async ({}) => {
   return (
     <div className="flex flex-col mt-12">
       <h1 className="text-xl text-gray-500 uppercase font-semibold">Account</h1>
-      <h1 className="text-3xl font-extrabold">{session?.user?.email}</h1>
-      <h1 className="text-2xl  font-semibold">Orders:</h1>
+      <h1 className="text-xl md:text-3xl font-extrabold">{session?.user?.email}</h1>
+      <h1 className="text-2xl  font-semibold mt-6">Orders:</h1>
       <div className="bg-gray-200 p-3 rounded w-full md:w-1/2 shadow-lg">
         <h1 className="text-lg font-semibold">Order #41256126</h1>
         <h2 className="text-gray-500">23.05.2023 17:45</h2>
