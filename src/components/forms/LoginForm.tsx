@@ -5,7 +5,7 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { signIn } from "next-auth/react";
 import { Loader2 } from "lucide-react";
-import useToaster from "@/app/login/useToaster";
+import useToaster from "@/lib/useToaster";
 import { useSearchParams } from "next/navigation";
 
 interface LoginFormProps {}
@@ -14,10 +14,12 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
   const toast = useToaster();
+
+  //search for error params
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
- 
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +31,7 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
       await signIn("credentials", {
         email,
         password,
-        callbackUrl: "/",
+        callbackUrl: "/xd",
         redirect: true,
       });
       setLoading(false);
@@ -39,7 +41,7 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
   };
 
   return (
-    <form onSubmit={(e) => onSubmit(e)}>
+    <form onSubmit={(e) => onSubmit(e)} className="w-full">
       <Input label="Email" placeholer="Email" ref={emailRef} type="email" />
       <Input
         label="Password"
@@ -47,9 +49,13 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
         ref={passwordRef}
         type="password"
       />
-      {error && <div className="p-5 bg-red-500 rounded-lg mt-6 text-white"><span>Wrong Credentials</span></div>}
-      <Button className="my-8 flex gap-2" type="submit">
-        {loading && <Loader2 className="h-5 w-5 mr-2 animate-spin" />}
+      {error && (
+        <div className="mt-6 rounded-lg bg-red-500 p-5 text-white">
+          <span>Wrong Credentials</span>
+        </div>
+      )}
+      <Button size="lg" className="my-4 flex items-center gap-2" type="submit">
+        {loading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
         Log in
       </Button>
     </form>

@@ -1,4 +1,4 @@
-import { forwardRef, FC } from "react";
+import { forwardRef } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -11,12 +11,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     if (label) {
       return (
         <div className=" w-full">
-          <p className="font-bold my-2">{label}</p>
+          <p className="my-2 font-bold">{label}</p>
           <input
             {...props}
             ref={ref}
             placeholder={placeholer}
-            className={`${className} outline outline-2 focus:outline-green-800 outline-gray-300 p-2 rounded w-full`}
+            className={`${className} w-full rounded p-2 outline outline-2 outline-gray-300 focus:outline-green-800`}
           />
         </div>
       );
@@ -26,7 +26,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
           ref={ref}
           placeholder={placeholer}
-          className={`${className} outline outline-2 focus:outline-green-800 outline-gray-300 p-2 rounded  w-full`}
+          className={`${className} w-full rounded p-2 outline outline-2 outline-gray-300  focus:outline-green-800`}
         />
       );
   }

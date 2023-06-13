@@ -13,25 +13,25 @@ const Navbar = async ({}) => {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className=" flex justify-between py-4 left-0 top-0 w-full items-center">
-        <div className="flex gap-12">
-          <Link href={"/"} className="font-extrabold text-3xl">
-            SHOPY
-          </Link>
-          <div className="hidden md:flex gap-9 items-center">
-            {navs.map((i) => (
-              <Link
-                key={i.id}
-                className="px-3 py-2 rounded-xl hover:bg-gray-200 transition-colors"
-                href={i.route}
-              >
-                {i.name}
-              </Link>
-            ))}
-          </div>
+    <div className=" left-0 top-0 flex w-full items-center justify-between py-4">
+      <div className="flex gap-12">
+        <Link href={"/"} className="text-3xl font-extrabold">
+          SHOPY
+        </Link>
+        <div className="hidden items-center gap-9 md:flex">
+          {navs.map((i) => (
+            <Link
+              key={i.id}
+              className="rounded-xl px-3 py-2 transition-colors hover:bg-gray-200"
+              href={i.route}
+            >
+              {i.name}
+            </Link>
+          ))}
         </div>
-        <NavbarClientButtons session={session} />
-        <MoblieNavbar navs={navs} />
+      </div>
+      <NavbarClientButtons session={session} />
+      <MoblieNavbar navs={navs} />
     </div>
   );
 };

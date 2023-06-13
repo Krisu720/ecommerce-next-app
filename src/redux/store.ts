@@ -1,16 +1,16 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { useSelector,TypedUseSelectorHook } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
 import cartReducer from "./cart-slice";
-import toasterReducer from './toaster-slice'
+import toasterReducer from "./toaster-slice";
 
 export const store = configureStore({
   reducer: {
     cartReducer,
-    toasterReducer
-  }
+    toasterReducer,
+  },
 });
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
-export const useAppSelector:TypedUseSelectorHook<RootState> = useSelector
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

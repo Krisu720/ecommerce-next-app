@@ -1,17 +1,16 @@
 "use client";
 
-import { FC, useRef, useState } from "react";
+import { FC, useCallback, useRef, useState, useMemo } from "react";
 import Button from "@/components/ui/Button";
 import { useAppSelector } from "@/redux/store";
-import DeliveryInformationForm from "./DeliveryInformationForm";
-import OrderSummaryForm from "./OrderSummaryForm";
+import DeliveryInformationForm from "../../components/forms/DeliveryInformationForm";
+import OrderSummaryForm from "../../components/forms/OrderSummaryForm";
 import { getSubtotal } from "@/redux/cart-slice";
 import CartItem from "@/components/CartItem";
 import { Promocode } from "@prisma/client";
-import useToaster from "@/app/login/useToaster";
-import * as Dialog from "@radix-ui/react-dialog";
+import useToaster from "@/lib/useToaster";
 import DemoDialog from "@/components/DemoDialog";
-
+import { CartObject } from "@/types/types";
 interface pageProps {}
 
 const deliveryPrice: number = 9;
@@ -19,45 +18,38 @@ const deliveryPrice: number = 9;
 const page: FC<pageProps> = ({}) => {
   const toast = useToaster();
 
-  const firstnameRef = useRef<HTMLInputElement>(null);
-  const lastnameRef = useRef<HTMLInputElement>(null);
-  const citytownRef = useRef<HTMLInputElement>(null);
-  const zipcodeRef = useRef<HTMLInputElement>(null);
-  const mobilenumberRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const addressRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState<string>("paypal");
+  const [value, setValue] = useState<CartObject>({
+    address: "",
+    cityTown: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    mobileNumber: "",
+    zipCode: "",
+  });
+
+  const setCartObject = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const name = e.target.name;
+      const value = e.target.value;
+
+      setValue((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    [value]
+  );
+
+  const [radio, setRadio] = useState<string>("paypal");
+
   const [code, setCode] = useState<Promocode | null>(null);
   const [codeLoading, setCodeLoading] = useState<boolean>(false);
   const codeRef = useRef<HTMLInputElement>(null);
+
   const cart = useAppSelector((state) => state.cartReducer.value.products);
 
-  const submitOrder = (): void => {
-    finalObject = {
-      firstName: firstnameRef.current?.value,
-      lastName: lastnameRef.current?.value,
-      address: addressRef.current?.value,
-      cityTown: citytownRef.current?.value,
-      zipCode: zipcodeRef.current?.value,
-      mobileNumber: mobilenumberRef.current?.value,
-      email: emailRef.current?.value,
-      paymentMethod: value,
-      code,
-    };
-    console.log(finalObject);
-  };
-
-  let finalObject = {
-    firstName: firstnameRef.current?.value,
-    lastName: lastnameRef.current?.value,
-    address: addressRef.current?.value,
-    cityTown: citytownRef.current?.value,
-    zipCode: zipcodeRef.current?.value,
-    mobileNumber: mobilenumberRef.current?.value,
-    email: emailRef.current?.value,
-    paymentMethod: value,
-    code,
-  };
+  const submitOrder = (): void => {};
 
   const checkCode = async (): Promise<void> => {
     if (codeRef.current?.value) {
@@ -79,43 +71,38 @@ const page: FC<pageProps> = ({}) => {
   return (
     <div className="md:flex md:min-h-screen">
       <div className="md:w-2/3">
-        <div className="border rounded-xl border-gray-200 p-5">
-          <h1 className="font-bold text-2xl">Items</h1>
+        <div className="rounded-xl border border-gray-200 p-5">
+          <h1 className="text-2xl font-bold">Items</h1>
           {cart.length > 0 ? (
             cart.map((i) => <CartItem key={i.id} {...i} />)
           ) : (
-            <h1 className="text-gray-500 text-2xl flex justify-center items-center font-semibold my-6">
+            <h1 className="my-6 flex items-center justify-center text-2xl font-semibold text-gray-500">
               No items in cart
             </h1>
           )}
         </div>
-        <div className="border rounded-xl border-gray-200 p-5 mt-6">
-          <h1 className="font-bold text-2xl">Delivery Infomation</h1>
+        <div className="mt-6 rounded-xl border border-gray-200 p-5">
+          <h1 className="text-2xl font-bold">Delivery Infomation</h1>
           <DeliveryInformationForm
-            firstnameRef={firstnameRef}
-            citytownRef={citytownRef}
-            emailRef={emailRef}
-            addressRef={addressRef}
-            lastnameRef={lastnameRef}
-            mobilenumberRef={mobilenumberRef}
-            zipcodeRef={zipcodeRef}
+            value={value}
+            setCartObject={setCartObject}
           />
         </div>
       </div>
-      <div className="md:w-1/3 md:ml-5 mt-5 md:mt-0">
+      <div className="mt-5 md:ml-5 md:mt-0 md:w-1/3">
         <div className="md:sticky md:top-5">
-          <div className="border rounded-xl border-gray-200 p-5">
-            <h1 className="font-bold text-2xl">Order Summary</h1>
+          <div className="rounded-xl border border-gray-200 p-5">
+            <h1 className="text-2xl font-bold">Order Summary</h1>
             <OrderSummaryForm
-              value={value}
-              setValue={setValue}
               checkCode={checkCode}
               codeRef={codeRef}
               setCode={setCode}
+              radio={radio}
+              setRadio={setRadio}
               code={code}
               codeLoading={codeLoading}
             />
-            <div className="divide-y mt-3">
+            <div className="mt-3 divide-y">
               <div className="flex flex-col gap-2 pb-2">
                 <div className="flex justify-between">
                   <p className="font-semibold">Subtotal</p>
@@ -129,7 +116,7 @@ const page: FC<pageProps> = ({}) => {
                   <div className="flex justify-between">
                     <p className="font-semibold">
                       Discount Code:{" "}
-                      <span className="text-gray-500 text-sm">{code.name}</span>
+                      <span className="text-sm text-gray-500">{code.name}</span>
                     </p>
                     <p className="font-semibold">-{code.price}zł</p>
                   </div>
@@ -141,17 +128,18 @@ const page: FC<pageProps> = ({}) => {
                   {getSubtotal(cart) + deliveryPrice}zł
                 </p>
               </div>
-              <Dialog.Root defaultOpen>
-                <Dialog.Trigger asChild>
-                  <Button
-                    className="w-full mt-3 py-3"
-                    onClick={() => submitOrder()}
-                  >
-                    Pay {getSubtotal(cart)}zł
-                  </Button>
-                </Dialog.Trigger>
-                <DemoDialog {...finalObject} />
-              </Dialog.Root>
+              <DemoDialog
+                {...value}
+                code={code?.name ? code.name : null}
+                paymentMethod={radio}
+              >
+                <Button
+                  className="mt-3 w-full py-3"
+                  onClick={() => submitOrder()}
+                >
+                  Pay {getSubtotal(cart)}zł
+                </Button>
+              </DemoDialog>
             </div>
           </div>
         </div>

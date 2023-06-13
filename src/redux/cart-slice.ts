@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, current } from "@reduxjs/toolkit";
 import { Product } from "@prisma/client";
-import { RootState } from "./store";
 import { v4 as uuid4 } from "uuid";
 import { getLocalStorageCart, updateLocalStorageCart } from "./cartPersist";
 import { ReduxProduct } from "@/types/types";
@@ -51,7 +50,6 @@ export const cart = createSlice({
           },
         };
       }
-
 
       //if not exist push new product and return state
       currentProducts.push(newProduct);
@@ -114,15 +112,25 @@ export const cart = createSlice({
         },
       };
     },
+
+    removeAll: () => {
+      return {
+        value: { products: [] },
+      };
+    },
   },
 });
 
+const deliveryPrice = 9;
 
 export const getAmountOfItems = (state: ReduxProduct[]): number =>
   state.reduce((total, item) => total + item.amount, 0);
 
 export const getSubtotal = (state: ReduxProduct[]): number =>
-  state.reduce((total, item) => total + item.price * item.amount, 0);
+  state.reduce(
+    (total, item) => total + item.price * item.amount,
+    0 + deliveryPrice
+  );
 
 export const { addToCart, changeAmount, removeFromCart } = cart.actions;
 export default cart.reducer;

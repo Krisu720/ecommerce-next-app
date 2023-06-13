@@ -3,9 +3,12 @@ import Card from "@/components/Card";
 import Button from "@/components/ui/Button";
 import getProducts from "@/lib/getProducts";
 import { BadgeDollarSign, Rocket } from "lucide-react";
-import Image from "next/image";
+
+
 const Home = async () => {
+  
   const products = await getProducts();
+
   return (
     <main>
       <div className="md:h-[45rem] flex md:flex-row flex-col items-center relative ">
@@ -13,10 +16,10 @@ const Home = async () => {
           <h1 className="text-5xl font-extrabold tracking-tight">
             Increase your gaming <span className="text-green-700">satisfaction</span>.
           </h1>
-          <h2 className="text-lg text-gray-700 font-semibold my-2">
+          <h2 className="text-lg text-gray-700 font-semibold mt-2 mb-4">
             Enjoy playing games using our products available in our store.{" "}
           </h2>
-          <Button href="/products">Our Products</Button>
+          <Button href="/products" size="lg">Our Products</Button>
           <div className="flex gap-12 mt-6">
             <div className="flex gap-2">
               <BadgeDollarSign  className="text-green-800"/>

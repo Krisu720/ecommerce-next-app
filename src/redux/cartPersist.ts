@@ -6,15 +6,15 @@ const getLocalStorageCart = (): ReduxProduct[] => {
   //getting data from local storage
   const get = localStorage.getItem("cart");
   if (get) {
-    return JSON.parse(get)
+    return JSON.parse(get);
   } else {
-    return []
+    return [];
   }
 };
 
 const updateLocalStorageCart = (item: ReduxProduct[]) => {
   //updating data to local storage
-  localStorage.setItem("cart",JSON.stringify(item))
-}
+  localStorage.setItem("cart", JSON.stringify(item));
+};
 
-export {getLocalStorageCart,updateLocalStorageCart}
+export { getLocalStorageCart, updateLocalStorageCart };

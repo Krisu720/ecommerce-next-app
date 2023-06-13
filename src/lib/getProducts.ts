@@ -1,8 +1,8 @@
-import { prisma } from "./prismaSingleton"
+import { prisma } from "./prismaSingleton";
 
 const getProducts = async () => {
-    const products = await prisma.product.findMany();
-    return products;
-}
+  const products = await prisma.product.findMany();
+  return products;
+};
 
-export default getProducts
+export default getProducts;

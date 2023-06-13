@@ -1,11 +1,9 @@
 import { FC } from "react";
 
-interface BlobProps {}
-
-const Blob: FC<BlobProps> = ({}) => {
+const Blob: FC = ({}) => {
   return (
     <svg
-      className="absolute w-full h-full"
+      className="absolute h-full w-full"
       id="visual"
       viewBox="0 0 1232 720"
       xmlns="http://www.w3.org/2000/svg"

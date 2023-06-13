@@ -1,7 +1,7 @@
 import Card from "@/components/Card";
 import Button from "@/components/ui/Button";
 import getProducts from "@/lib/getProducts";
-import Banner from "./Banner";
+import Banner from "../../components/Banner";
 
 const page = async ({}) => {
   const products = await getProducts();
@@ -11,16 +11,16 @@ const page = async ({}) => {
       <Banner />
 
       {/* Filters */}
-      <div className="py-6 flex justify-end">
+      <div className="flex justify-end py-6">
         <Button>Sort by</Button>
       </div>
 
-      <h1 className="font-extrabold tracking-tighter text-4xl my-3">
+      <h1 className="my-3 text-4xl font-extrabold tracking-tighter">
         Our Products
       </h1>
 
       {/* Product card section */}
-      <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
         {products.map(({ id, description, image, price, quantity, title }) => (
           <div className="p-3">
             <Card

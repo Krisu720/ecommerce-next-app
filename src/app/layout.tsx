@@ -2,10 +2,10 @@ import Navbar from "@/components/Navbar";
 import CustomContainer from "@/components/ui/CustomContainer";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
-import Providers from "@/lib/Providers";
+import Providers from "@/components/Providers";
 import Footer from "@/components/Footer";
 import Toaster from "@/components/Toaster";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

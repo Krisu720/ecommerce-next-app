@@ -17,20 +17,21 @@ const CartItem: FC<CartItemProps> = ({
   price,
   uuid,
 }) => {
+  
   const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <div key={id} className="flex justify-between items-center gap-6 my-3">
+    <div key={id} className="my-3 flex items-center justify-between gap-6">
       <div className="h-30 w-40">
         <img
           src={image}
-          className=" bg-gray-200 rounded-xl md:h-full"
+          className=" rounded-xl bg-gray-200 md:h-full"
           alt="headphones"
         />
       </div>
       <div className="mr-auto">
         <h1 className="font-bold">{title}</h1>
-        <h1 className="text-gray-500 text-sm">{description}</h1>
+        <h1 className="text-sm text-gray-500">{description}</h1>
       </div>
 
       <div className="flex flex-col items-end">
@@ -42,7 +43,7 @@ const CartItem: FC<CartItemProps> = ({
                 ? () => dispatch(changeAmount({ type: "decrease", uuid }))
                 : () => dispatch(removeFromCart({ uuid }))
             }
-            className="bg-green-800 text-white rounded py-1 px-1 font-semibold"
+            className="rounded bg-green-800 px-1 py-1 font-semibold text-white"
           >
             <MinusSmallIcon className="h-4 w-4" />
           </button>
@@ -51,17 +52,17 @@ const CartItem: FC<CartItemProps> = ({
             readOnly
             type="number"
             value={amount}
-            className="hide-numberinput w-12 outline-none font-semibold text-center"
+            className="hide-numberinput w-12 text-center font-semibold outline-none"
           />
           <button
             onClick={() => dispatch(changeAmount({ type: "increase", uuid }))}
-            className="bg-green-800 text-white rounded py-1 px-1 font-semibold"
+            className="rounded bg-green-800 px-1 py-1 font-semibold text-white"
           >
             <PlusSmallIcon className="h-4 w-4" />
           </button>
         </div>
         <button
-          className="my-2 bg-red-500 text-white hover:bg-red-300 transition-colors rounded p-1 w-full flex justify-center"
+          className="my-2 flex w-full justify-center rounded bg-red-500 p-1 text-white transition-colors hover:bg-red-300"
           onClick={() => dispatch(removeFromCart({ uuid }))}
         >
           <Trash2 className="h-4 w-4" />

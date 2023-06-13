@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { CheckBadgeIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import { CheckBadgeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "@/redux/store";
 import { motion, AnimatePresence } from "framer-motion";
 interface ToasterProps {}
@@ -18,9 +18,9 @@ const Toaster: FC<ToasterProps> = ({}) => {
           exit={{ opacity: 0, x: 800 }}
           className={`fixed bottom-5 right-5 ${
             toast.type === "success" ? "bg-green-600" : "bg-red-600"
-          }  h-12 rounded-lg flex items-center justify-center`}
+          }  flex h-12 items-center justify-center rounded-lg`}
         >
-          <span className="text-white flex gap-2 px-2">
+          <span className="flex gap-2 px-2 text-white">
             {toast.type === "success" ? (
               <CheckBadgeIcon className="h-6 w-6" />
             ) : (

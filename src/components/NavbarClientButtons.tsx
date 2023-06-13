@@ -1,13 +1,12 @@
 "use client";
 
 import { FC, useState } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
 import { Session } from "next-auth";
 import {
   ChevronDownIcon,
-  UserIcon,
   Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/20/solid";
@@ -22,37 +21,42 @@ interface NavbarClientButtonsProps {
 const NavbarClientButtons: FC<NavbarClientButtonsProps> = ({ session }) => {
   const products = useAppSelector((state) => state.cartReducer.value.products);
   const amount = getAmountOfItems(products);
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false);
   return (
-    <div className="flex gap-2 md:gap-8 mx-3">
+    <div className="mx-3 flex gap-2 md:gap-8">
       {session ? (
-        <DropdownMenu.Root open={open} onOpenChange={(opened=>setOpen(opened))}>
+        <DropdownMenu.Root
+          open={open}
+          onOpenChange={(opened) => setOpen(opened)}
+        >
           <DropdownMenu.Trigger className="outline-none" asChild>
-            <button className="flex items-center px-3 py-2 rounded-xl hover:bg-gray-200 transition-colors">
+            <button className="flex items-center rounded-xl px-3 py-2 transition-colors hover:bg-gray-200">
               Account <ChevronDownIcon className="h-6 w-6" />
             </button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Portal >
+          <DropdownMenu.Portal>
             <DropdownMenu.Content className="relative z-50" asChild>
               <motion.div
-                className="mt-2 shadow  bg-white rounded p-2 flex flex-col items-center gap-1"
+                className="mt-2 flex  flex-col items-center gap-1 rounded bg-white p-2 shadow"
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
               >
                 <DropdownMenu.Item className="outline-none">
                   <Link
                     href="/account"
-                    className="flex items-center gap-1 hover:bg-gray-200 p-2 rounded"
-                    onClick={()=>setOpen(false)}
+                    className="flex items-center gap-1 rounded p-2 hover:bg-gray-200"
+                    onClick={() => setOpen(false)}
                   >
                     <Cog6ToothIcon className="h-6 w-6" />
                     Account settings
                   </Link>
                 </DropdownMenu.Item>
-                <DropdownMenu.Item className="outline-none w-full">
+                <DropdownMenu.Item className="w-full outline-none">
                   <button
-                    onClick={() => signOut({redirect:true,callbackUrl:"/"})}
-                    className="flex w-full items-center gap-1 hover:bg-gray-200 p-2 rounded"
+                    onClick={() =>
+                      signOut({ redirect: true, callbackUrl: "/" })
+                    }
+                    className="flex w-full items-center gap-1 rounded p-2 hover:bg-gray-200"
                   >
                     <ArrowRightOnRectangleIcon className="h-6 w-6" />
                     Log out
@@ -64,20 +68,20 @@ const NavbarClientButtons: FC<NavbarClientButtonsProps> = ({ session }) => {
         </DropdownMenu.Root>
       ) : (
         <Link
-          className="px-3 py-2 rounded-xl hover:bg-gray-200 transition-colors"
+          className="rounded-xl px-3 py-2 transition-colors hover:bg-gray-200"
           href="/login"
         >
           Log in
         </Link>
       )}
       <Link
-        className="px-3 py-2 rounded-xl hover:bg-gray-200 transition-colors"
+        className="rounded-xl px-3 py-2 transition-colors hover:bg-gray-200"
         href="/cart"
       >
         <div className="relative">
           <ShoppingCartIcon className="h-6 w-6" />
           {amount > 0 && (
-            <span className="absolute top-[-0.4rem] right-[-0.7rem] bg-orange-400 rounded-full text-xs px-2 text-white font-semibold">
+            <span className="absolute right-[-0.7rem] top-[-0.4rem] rounded-full bg-orange-400 px-2 text-xs font-semibold text-white">
               {amount}
             </span>
           )}

@@ -1,13 +1,11 @@
 "use client";
 
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import useToaster from "../login/useToaster";
+import useToaster from "../../lib/useToaster";
 
-interface RegisterFormProps {}
-
-const RegisterForm: FC<RegisterFormProps> = ({}) => {
+const RegisterForm: FC = ({}) => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const repeatPasswordRef = useRef<HTMLInputElement>(null);
@@ -51,7 +49,7 @@ const RegisterForm: FC<RegisterFormProps> = ({}) => {
         ref={repeatPasswordRef}
         type="password"
       />
-      <Button className="my-8 py-3" type="submit">
+      <Button size="lg" className="my-8 py-3" type="submit">
         Register
       </Button>
     </form>
