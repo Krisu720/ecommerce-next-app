@@ -18,6 +18,13 @@ const deliveryPrice: number = 9;
 const Page: FC<pageProps> = ({}) => {
   const toast = useToaster();
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [radio, setRadio] = useState<string>("paypal");
+
+  const [code, setCode] = useState<Promocode | null>(null);
+  const [codeLoading, setCodeLoading] = useState<boolean>(false);
+  const codeRef = useRef<HTMLInputElement>(null);
+
+  const cart = useAppSelector((state) => state.cartReducer.value.products);
 
   const [value, setValue] = useState<CartObject>({
     address: "",
@@ -29,42 +36,30 @@ const Page: FC<pageProps> = ({}) => {
     zipCode: "",
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     //checking if something from value has empty string if true set button disabled
     let checkedEmpty = false;
     for (const [key, val] of Object.entries(value)) {
-      if(val === "") {
-        checkedEmpty=true
-      } 
+      if (val === "") {
+        checkedEmpty = true;
+      }
     }
-    if(!checkedEmpty) {
-      setDisabled(false)
+    if (!checkedEmpty) {
+      setDisabled(false);
     } else {
-      setDisabled(true)
+      setDisabled(true);
     }
-  },[value])
+  }, [value]);
 
-  const setCartObject = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>): void => {
-      const name = e.target.name;
-      const value = e.target.value;
+  const setCartObject = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const name = e.target.name;
+    const value = e.target.value;
 
-      setValue((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    },
-    [value]
-  );
-
-  const [radio, setRadio] = useState<string>("paypal");
-
-  const [code, setCode] = useState<Promocode | null>(null);
-  const [codeLoading, setCodeLoading] = useState<boolean>(false);
-  const codeRef = useRef<HTMLInputElement>(null);
-
-  const cart = useAppSelector((state) => state.cartReducer.value.products);
-
+    setValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const checkCode = async (): Promise<void> => {
     if (codeRef.current?.value) {
@@ -87,7 +82,7 @@ const Page: FC<pageProps> = ({}) => {
         <div className="rounded-xl border border-gray-200 p-5">
           <h1 className="text-2xl font-bold">Items</h1>
           {cart.length > 0 ? (
-            cart.map((i,index) => <CartItem key={index} {...i} />)
+            cart.map((i, index) => <CartItem key={index} {...i} />)
           ) : (
             <h1 className="my-6 flex items-center justify-center text-2xl font-semibold text-gray-500">
               No items in cart

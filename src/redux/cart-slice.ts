@@ -4,6 +4,7 @@ import { v4 as uuid4 } from "uuid";
 import { getLocalStorageCart, updateLocalStorageCart } from "./cartPersist";
 import { ReduxProduct } from "@/types/types";
 
+
 interface InitialState {
   value: {
     products: ReduxProduct[];
@@ -12,7 +13,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   value: {
-    products: getLocalStorageCart(),
+    products: [],
   },
 };
 
@@ -119,6 +120,14 @@ export const cart = createSlice({
         value: { products: [] },
       };
     },
+
+    setCart: (state, action: PayloadAction<{ data: ReduxProduct[] }>) => {
+      return {
+        value: {
+          products: action.payload.data
+        }
+      }
+    }
   },
 });
 
@@ -128,5 +137,6 @@ export const getAmountOfItems = (state: ReduxProduct[]): number =>
 export const getSubtotal = (state: ReduxProduct[]): number =>
   state.reduce((total, item) => total + item.price * item.amount, 0);
 
-export const { addToCart, changeAmount, removeFromCart,removeAll } = cart.actions;
+export const { addToCart, changeAmount, removeFromCart, removeAll,setCart } =
+  cart.actions;
 export default cart.reducer;
