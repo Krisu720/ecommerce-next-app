@@ -1,11 +1,20 @@
+"use client";
+
 import { FC } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Button from "./ui/Button";
-import { CartObject } from "@/types/types";
+import { CartObject, ReduxProduct } from "@/types/types";
+import { Promocode } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { getSubtotal, removeAll } from "@/redux/cart-slice";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 interface DemoDialogProps extends CartObject {
-  code: string | null;
+  code: Promocode | null;
   paymentMethod: string;
   children: React.ReactNode;
+  cart: ReduxProduct[];
 }
 
 const DemoDialog: FC<DemoDialogProps> = ({
@@ -19,6 +28,7 @@ const DemoDialog: FC<DemoDialogProps> = ({
   paymentMethod,
   code,
   children,
+  cart,
 }) => {
   const codeBlock = `{
     "firstName": "${firstName}",
@@ -29,8 +39,55 @@ const DemoDialog: FC<DemoDialogProps> = ({
     "mobileNumber": "${mobileNumber}"
     "email": "${email}"
     "paymentMethod": "${paymentMethod}"
-    "code": "${code}"
+    "code": "${code?.name}"
+    "products": ${cart[0]}
  }`;
+
+  const session: any = useSession();
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const sumbitSuccess = async () => {
+    const subtotal = getSubtotal(cart);
+    const deliveryPrice = 9;
+    const total = code
+      ? subtotal - code.price + deliveryPrice
+      : subtotal + deliveryPrice;
+    console.log(total);
+
+    const order = {
+      address,
+      cityTown,
+      code: code ? code.name : null,
+      email,
+      firstName,
+      price: total,
+      lastName,
+      mobileNumber,
+      paymentMethod,
+      products: JSON.stringify(cart),
+      userId: session.data?.user?.id,
+      zipCode,
+    };
+
+    const res = await fetch("/api/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    });
+    const data = await res.json();
+    console.log(data.id);
+    if (res.ok) {
+      dispatch(removeAll());
+      router.push(`/success/${data.id}`);
+    }
+  };
+
+  const submitDeny = async () => {
+    dispatch(removeAll());
+    router.push("/failed");
+  };
 
   return (
     <Dialog.Root>
@@ -47,10 +104,13 @@ const DemoDialog: FC<DemoDialogProps> = ({
           <pre className="rounded bg-black text-white">{codeBlock}</pre>
           <div className="mt-6 flex w-full gap-3">
             <Dialog.Close asChild className="w-1/2">
-              <Button size="lg">Success</Button>
+              <Button size="lg" onClick={() => sumbitSuccess()}>
+                Success
+              </Button>
             </Dialog.Close>
             <Dialog.Close asChild className="w-1/2">
               <Button
+                onClick={() => submitDeny()}
                 size="lg"
                 className="bg-red-300 text-red-800 hover:bg-red-800 hover:text-white"
               >

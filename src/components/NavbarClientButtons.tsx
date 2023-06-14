@@ -53,9 +53,10 @@ const NavbarClientButtons: FC<NavbarClientButtonsProps> = ({ session }) => {
                 </DropdownMenu.Item>
                 <DropdownMenu.Item className="w-full outline-none">
                   <button
-                    onClick={() =>
-                      signOut({ redirect: true, callbackUrl: "/" })
-                    }
+                    onClick={async () => {
+                      await signOut({ redirect: false });
+                      location.reload();
+                    }}
                     className="flex w-full items-center gap-1 rounded p-2 hover:bg-gray-200"
                   >
                     <ArrowRightOnRectangleIcon className="h-6 w-6" />

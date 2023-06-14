@@ -1,13 +1,8 @@
 import { FC } from "react";
 import Link from "next/link";
+import { Product } from "@prisma/client";
 
-interface CardProps {
-  title: string;
-  description: string;
-  price: number;
-  image: string;
-  id: number;
-}
+interface CardProps extends Product {}
 
 const Card: FC<CardProps> = ({ title, description, price, image, id }) => {
   return (
@@ -17,9 +12,9 @@ const Card: FC<CardProps> = ({ title, description, price, image, id }) => {
         className="group flex h-80 items-center justify-center overflow-hidden rounded-lg bg-gray-100"
       >
         <img
-          src={image}
+          src={image[0]}
           className="cursor-pointer transition-transform group-hover:scale-90 group-active:scale-75"
-          alt=""
+          alt={title}
         />
       </Link>
       <div className="mt-2 flex w-full flex-col items-start gap-1">

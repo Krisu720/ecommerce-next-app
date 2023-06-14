@@ -1,13 +1,14 @@
 import Blob from "@/components/Blob";
 import Card from "@/components/Card";
 import Button from "@/components/ui/Button";
+import getFeaturedProducts from "@/lib/getFeaturedProducts";
 import getProducts from "@/lib/getProducts";
 import { BadgeDollarSign, Rocket } from "lucide-react";
 
 
 const Home = async () => {
   
-  const products = await getProducts();
+  const products = await getFeaturedProducts()
 
   return (
     <main>
@@ -40,7 +41,7 @@ const Home = async () => {
         Featured Products
       </h1>
       <div className="grid md:grid-cols-4">
-        {products.map(({ id, description, image, price, quantity, title }) => (
+        {products.map(({ id, description, image, price,  title }) => (
           <div className="p-3">
             <Card
               key={id}

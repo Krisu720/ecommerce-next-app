@@ -114,6 +114,7 @@ export const cart = createSlice({
     },
 
     removeAll: () => {
+      updateLocalStorageCart([]);
       return {
         value: { products: [] },
       };
@@ -121,16 +122,11 @@ export const cart = createSlice({
   },
 });
 
-const deliveryPrice = 9;
-
 export const getAmountOfItems = (state: ReduxProduct[]): number =>
   state.reduce((total, item) => total + item.amount, 0);
 
 export const getSubtotal = (state: ReduxProduct[]): number =>
-  state.reduce(
-    (total, item) => total + item.price * item.amount,
-    0 + deliveryPrice
-  );
+  state.reduce((total, item) => total + item.price * item.amount, 0);
 
-export const { addToCart, changeAmount, removeFromCart } = cart.actions;
+export const { addToCart, changeAmount, removeFromCart,removeAll } = cart.actions;
 export default cart.reducer;

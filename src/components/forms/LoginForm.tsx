@@ -28,12 +28,16 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
 
     if (email && password) {
       setLoading(true);
-      await signIn("credentials", {
+      const result = await signIn("credentials", {
         email,
         password,
-        callbackUrl: "/xd",
-        redirect: true,
+        redirect: false,
       });
+      if (result?.error) {
+        toast({message: result.error,type: "danger"});
+      } else {
+        
+      }
       setLoading(false);
     } else {
       toast({ message: "Wrong credentials", type: "danger" });

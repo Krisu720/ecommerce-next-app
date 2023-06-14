@@ -24,7 +24,7 @@ const CartItem: FC<CartItemProps> = ({
     <div key={id} className="my-3 flex items-center justify-between gap-6">
       <div className="h-30 w-40">
         <img
-          src={image}
+          src={image[0]}
           className=" rounded-xl bg-gray-200 md:h-full"
           alt="headphones"
         />

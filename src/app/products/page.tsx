@@ -21,10 +21,10 @@ const page = async ({}) => {
 
       {/* Product card section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-        {products.map(({ id, description, image, price, quantity, title }) => (
+        {products.map(({ id, description, image, price, title },index) => (
           <div className="p-3">
             <Card
-              key={id}
+              key={index}
               id={id}
               title={title}
               description={description}

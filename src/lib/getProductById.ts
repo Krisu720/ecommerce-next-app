@@ -1,7 +1,9 @@
+import { NextResponse } from "next/server";
 import { prisma } from "./prismaSingleton";
 
 export const getProductById = async (id: string) => {
-  const idNumber = parseInt(id);
-  const product = prisma.product.findUnique({ where: { id: idNumber } });
-  return product;
+  const product = prisma.product.findUnique({ where: { id } });
+  if (product) {
+    return product;
+  } 
 };

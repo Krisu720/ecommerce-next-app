@@ -13,7 +13,7 @@ interface ButtonProps
 }
 
 export const buttonVariants = cva(
-  "font-semibold duration-75  transition-all active:scale-95 inline-flex justify-center",
+  "font-semibold duration-75  transition-all active:scale-95 inline-flex justify-center disabled:bg-gray-200 disabled:text-white",
   {
     variants: {
       variant: {

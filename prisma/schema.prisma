@@ -16,7 +16,7 @@ model Product {
   title String @unique
   description String
   price Int
-  image String
+  image String[]
 }
 
 model User {
@@ -29,7 +29,18 @@ model User {
 model Order {
   id String @id @default(uuid())
   author User @relation(fields: [userId],references: [id])
+  address String
   userId String
+  firstName String
+  lastName String
+  cityTown String
+  zipCode String
+  mobileNumber String
+  email String
+  paymentMethod String
+  code String?
+  products String
+  price Float @default(0)
 }
 
 model Promocode {

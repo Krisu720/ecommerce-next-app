@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useRef, useState, useMemo } from "react";
+import { FC, useCallback, useRef, useState, useMemo, useEffect } from "react";
 import Button from "@/components/ui/Button";
 import { useAppSelector } from "@/redux/store";
 import DeliveryInformationForm from "../../components/forms/DeliveryInformationForm";
@@ -17,6 +17,7 @@ const deliveryPrice: number = 9;
 
 const page: FC<pageProps> = ({}) => {
   const toast = useToaster();
+  const [disabled, setDisabled] = useState<boolean>(true);
 
   const [value, setValue] = useState<CartObject>({
     address: "",
@@ -27,6 +28,21 @@ const page: FC<pageProps> = ({}) => {
     mobileNumber: "",
     zipCode: "",
   });
+
+  useEffect(()=>{
+    //checking if something from value has empty string if true set button disabled
+    let checkedEmpty = false;
+    for (const [key, val] of Object.entries(value)) {
+      if(val === "") {
+        checkedEmpty=true
+      } 
+    }
+    if(!checkedEmpty) {
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+  },[value])
 
   const setCartObject = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -49,7 +65,6 @@ const page: FC<pageProps> = ({}) => {
 
   const cart = useAppSelector((state) => state.cartReducer.value.products);
 
-  const submitOrder = (): void => {};
 
   const checkCode = async (): Promise<void> => {
     if (codeRef.current?.value) {
@@ -125,19 +140,20 @@ const page: FC<pageProps> = ({}) => {
               <div className="flex justify-between pt-2">
                 <p className="font-extrabold">Total</p>
                 <p className="font-extrabold">
-                  {getSubtotal(cart) + deliveryPrice}zł
+                  {getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0)}
+                  zł
                 </p>
               </div>
               <DemoDialog
                 {...value}
-                code={code?.name ? code.name : null}
+                code={code ? code : null}
                 paymentMethod={radio}
+                cart={cart}
               >
-                <Button
-                  className="mt-3 w-full py-3"
-                  onClick={() => submitOrder()}
-                >
-                  Pay {getSubtotal(cart)}zł
+                <Button disabled={disabled} className="mt-3 w-full py-3">
+                  Pay{" "}
+                  {getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0)}
+                  zł
                 </Button>
               </DemoDialog>
             </div>

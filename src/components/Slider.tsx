@@ -3,7 +3,7 @@ import { FC } from "react";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 interface SliderProps {
-  image: string;
+  image: string[];
 }
 
 const Slider: FC<SliderProps> = ({ image }) => {

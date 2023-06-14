@@ -19,12 +19,35 @@ export const authOptions: NextAuthOptions = {
         if (!credentials) return null;
         const user = await authUser(credentials.email, credentials.password);
         if (user) {
-          return user;
+          return {
+            id: user.id,
+            email: user.email,
+          };
         }
         return null;
       },
     }),
   ],
+  callbacks: {
+    session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+        },
+      };
+    },
+    jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+        };
+      }
+      return token;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

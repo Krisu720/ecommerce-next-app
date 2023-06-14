@@ -19,7 +19,7 @@ const authUser = async (
 
   const { password: pass, id, ...userChecked } = user;
 
-  if (isPasswordValid) return { id: id.toString(), ...userChecked };
+  if (isPasswordValid) return { id: id, ...userChecked };
 
   return null;
 };

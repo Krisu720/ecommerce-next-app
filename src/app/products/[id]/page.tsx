@@ -1,6 +1,7 @@
 import { getProductById } from "@/lib/getProductById";
 import ProductInfoSection from "../../../components/sections/ProductInfoSection";
 import Slider from "../../../components/Slider";
+import { redirect } from "next/navigation";
 
 const array = [1, 2, 3, 4];
 const images = [
@@ -11,8 +12,10 @@ const images = [
 const page = async ({ params }: { params: { id: string } }) => {
   const product = await getProductById(params.id);
 
-  return (
-    <div>
+  if(product) {
+
+    return (
+      <div>
       <div className="flex flex-col md:flex-row">
         <div className="w-full p-12 md:w-1/2">
           <div className="rounded-xl bg-gray-100">
@@ -25,6 +28,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       </div>
     </div>
   );
+} else redirect("/")
 };
 
 export default page;
