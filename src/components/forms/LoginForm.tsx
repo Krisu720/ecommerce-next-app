@@ -31,7 +31,8 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
       const result = await signIn("credentials", {
         email,
         password,
-        redirect: false,
+        redirect: true,
+        callbackUrl: "/"
       });
       if (result?.error) {
         toast({message: result.error,type: "danger"});

@@ -13,7 +13,6 @@ const DeliveryInformationForm: FC<DeliveryInformationFormProps> = ({
   value,
   setCartObject,
 }) => {
-  console.log("DeliveryInformationForm");
   return (
     <>
       <div className="flex gap-6">

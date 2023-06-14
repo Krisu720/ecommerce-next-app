@@ -52,8 +52,6 @@ const OrderSummaryForm: FC<OrderSummaryFormProps> = ({
   setCode,
   codeLoading,
 }) => {
-  console.log("OrdersSummaryForm");
-
   return (
     <>
       <div className="my-3 flex items-center">

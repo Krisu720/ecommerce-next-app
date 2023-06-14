@@ -52,7 +52,6 @@ const DemoDialog: FC<DemoDialogProps> = ({
     const total = code
       ? subtotal - code.price + deliveryPrice
       : subtotal + deliveryPrice;
-    console.log(total);
 
     const order = {
       address,
@@ -77,10 +76,9 @@ const DemoDialog: FC<DemoDialogProps> = ({
       body: JSON.stringify(order),
     });
     const data = await res.json();
-    console.log(data.id);
     if (res.ok) {
-      dispatch(removeAll());
       router.push(`/success/${data.id}`);
+      dispatch(removeAll());
     }
   };
 

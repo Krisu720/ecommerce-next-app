@@ -81,8 +81,6 @@ const page: FC<pageProps> = ({}) => {
     }
   };
 
-  console.log("Parent refresh");
-
   return (
     <div className="md:flex md:min-h-screen">
       <div className="md:w-2/3">

@@ -20,6 +20,5 @@ export const POST = async (req: Request) => {
       userId: data.userId,
     },
   });
-  console.log(res.id)
   return NextResponse.json({id:res.id});
 };
