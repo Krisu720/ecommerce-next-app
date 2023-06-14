@@ -15,7 +15,7 @@ interface pageProps {}
 
 const deliveryPrice: number = 9;
 
-const page: FC<pageProps> = ({}) => {
+const Page: FC<pageProps> = ({}) => {
   const toast = useToaster();
   const [disabled, setDisabled] = useState<boolean>(true);
 
@@ -87,7 +87,7 @@ const page: FC<pageProps> = ({}) => {
         <div className="rounded-xl border border-gray-200 p-5">
           <h1 className="text-2xl font-bold">Items</h1>
           {cart.length > 0 ? (
-            cart.map((i) => <CartItem key={i.id} {...i} />)
+            cart.map((i,index) => <CartItem key={index} {...i} />)
           ) : (
             <h1 className="my-6 flex items-center justify-center text-2xl font-semibold text-gray-500">
               No items in cart
@@ -162,4 +162,4 @@ const page: FC<pageProps> = ({}) => {
   );
 };
 
-export default page;
+export default Page;

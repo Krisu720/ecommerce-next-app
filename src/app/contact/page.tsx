@@ -1,7 +1,7 @@
 import { Building2, Mail, Phone } from "lucide-react";
 import { FC } from "react";
 
-const page: FC = ({}) => {
+const Page: FC = ({}) => {
   return (
     <div className="my-12 flex flex-col items-center justify-center lg:my-0 lg:min-h-screen">
       <h1 className="text-xl font-semibold uppercase text-gray-500">Contact</h1>
@@ -40,4 +40,4 @@ const page: FC = ({}) => {
   );
 };
 
-export default page;
+export default Page;

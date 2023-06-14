@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { getOrder } from "@/lib/getOrderById";
 
-const page = async ({
+const Page = async ({
   params: { orderId },
 }: {
   params: { orderId: string };
@@ -42,4 +42,4 @@ const page = async ({
   );
 };
 
-export default page;
+export default Page;

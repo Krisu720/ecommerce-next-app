@@ -7,3 +7,11 @@
     -webkit-appearance: none;
     margin: 0;
 }
+
+.swiper-button-next {
+    color: black !important;
+}
+    
+.swiper-button-prev {
+    color: black !important;
+}

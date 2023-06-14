@@ -4,7 +4,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { getOrders } from "@/lib/getOrders";
 import { ReduxProduct } from "@/types/types";
 
-const page: FC = async ({}) => {
+const Page: FC = async ({}) => {
   const session: any = await getServerSession(authOptions);
   const orders = await getOrders(session?.user?.id);
   return (
@@ -34,8 +34,8 @@ const page: FC = async ({}) => {
                 {i.mobileNumber},{i.email}
               </h2>
               <h2 className="text-lg font-semibold">total: {i.price}zł</h2>
-              {Array<ReduxProduct>(...JSON.parse(i.products)).map((i) => (
-                <div className="my-2 flex">
+              {Array<ReduxProduct>(...JSON.parse(i.products)).map((i,index) => (
+                <div key={index} className="my-2 flex">
                   <img src={i.image[0]} alt={i.title} className="h-16 w-16" />
                   <div className="flex w-full items-center justify-around">
                     <p className="text-sm md:text-base">{i.title}</p>
@@ -56,4 +56,4 @@ const page: FC = async ({}) => {
   );
 };
 
-export default page;
+export default Page;

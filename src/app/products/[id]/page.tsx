@@ -9,26 +9,25 @@ const images = [
   "https://d33wubrfki0l68.cloudfront.net/49de349d12db851952c5556f3c637ca772745316/cfc56/static/images/wallpapers/bridge-02@2x.png",
   "https://d33wubrfki0l68.cloudfront.net/594de66469079c21fc54c14db0591305a1198dd6/3f4b1/static/images/wallpapers/bridge-01@2x.png",
 ];
-const page = async ({ params }: { params: { id: string } }) => {
+const Page = async ({ params }: { params: { id: string } }) => {
   const product = await getProductById(params.id);
 
-  if(product) {
-
+  if (product) {
     return (
       <div>
-      <div className="flex flex-col md:flex-row">
-        <div className="w-full p-12 md:w-1/2">
-          <div className="rounded-xl bg-gray-100">
-            {product?.image && <Slider image={product.image} />}
+        <div className="flex flex-col md:flex-row min-h-screen mt-12">
+          <div className=" md:w-1/2">
+            <div className="overflow-hidden rounded-3xl bg-gray-200">
+              {product?.image && <Slider image={product.image} />}
+            </div>
+          </div>
+          <div className="w-full p-12 md:w-1/2 ">
+            <ProductInfoSection product={product} />
           </div>
         </div>
-        <div className="w-full p-12 md:w-1/2">
-          <ProductInfoSection product={product} />
-        </div>
       </div>
-    </div>
-  );
-} else redirect("/")
+    );
+  } else redirect("/");
 };
 
-export default page;
+export default Page;

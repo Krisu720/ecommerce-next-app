@@ -41,8 +41,8 @@ const Home = async () => {
         Featured Products
       </h1>
       <div className="grid md:grid-cols-4">
-        {products.map(({ id, description, image, price,  title }) => (
-          <div className="p-3">
+        {products.map(({ id, description, image, price,  title },index) => (
+          <div className="p-3" key={index}>
             <Card
               key={id}
               id={id}

@@ -4,7 +4,7 @@ import { FC } from "react";
 
 interface pageProps {}
 
-const page: FC<pageProps> = ({}) => {
+const Page: FC<pageProps> = ({}) => {
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
       <div className="flex w-full translate-y-[-50%] flex-col items-center rounded-3xl  bg-gray-200 md:max-w-[30rem]">
@@ -22,4 +22,4 @@ const page: FC<pageProps> = ({}) => {
   );
 };
 
-export default page;
+export default Page;

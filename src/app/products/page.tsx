@@ -3,7 +3,7 @@ import Button from "@/components/ui/Button";
 import getProducts from "@/lib/getProducts";
 import Banner from "../../components/Banner";
 
-const page = async ({}) => {
+const Page = async ({}) => {
   const products = await getProducts();
 
   return (
@@ -22,7 +22,7 @@ const page = async ({}) => {
       {/* Product card section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
         {products.map(({ id, description, image, price, title },index) => (
-          <div className="p-3">
+          <div key={index} className="p-3">
             <Card
               key={index}
               id={id}
@@ -38,4 +38,4 @@ const page = async ({}) => {
   );
 };
 
-export default page;
+export default Page;
