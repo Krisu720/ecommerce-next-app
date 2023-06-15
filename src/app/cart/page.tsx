@@ -138,20 +138,21 @@ const Page: FC = ({}) => {
                 </p>
               </div>
               <Dialog.Root>
-      <Dialog.Trigger asChild></Dialog.Trigger>
+              <Dialog.Trigger asChild>
                 <Button disabled={disabled} className="mt-3 w-full py-3">
                   Pay{" "}
                   {getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0)}
                   zł
                 </Button>
+              </Dialog.Trigger>
               <DemoDialog
                 {...value}
                 code={code ? code : null}
                 paymentMethod={radio}
                 cart={cart}
               >
-              </DemoDialog>
-    </Dialog.Root>
+                </DemoDialog>
+              </Dialog.Root>
             </div>
           </div>
         </div>
