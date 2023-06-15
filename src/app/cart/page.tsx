@@ -11,11 +11,11 @@ import { Promocode } from "@prisma/client";
 import useToaster from "@/lib/useToaster";
 import DemoDialog from "@/components/DemoDialog";
 import { CartObject } from "@/types/types";
-interface pageProps {}
+import * as Dialog from "@radix-ui/react-dialog";
 
 const deliveryPrice: number = 9;
 
-const Page: FC<pageProps> = ({}) => {
+const Page: FC = ({}) => {
   const toast = useToaster();
   const [disabled, setDisabled] = useState<boolean>(true);
   const [radio, setRadio] = useState<string>("paypal");
@@ -137,18 +137,21 @@ const Page: FC<pageProps> = ({}) => {
                   zł
                 </p>
               </div>
+              <Dialog.Root>
+      <Dialog.Trigger asChild></Dialog.Trigger>
+                <Button disabled={disabled} className="mt-3 w-full py-3">
+                  Pay{" "}
+                  {getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0)}
+                  zł
+                </Button>
               <DemoDialog
                 {...value}
                 code={code ? code : null}
                 paymentMethod={radio}
                 cart={cart}
               >
-                <Button disabled={disabled} className="mt-3 w-full py-3">
-                  Pay{" "}
-                  {getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0)}
-                  zł
-                </Button>
               </DemoDialog>
+    </Dialog.Root>
             </div>
           </div>
         </div>

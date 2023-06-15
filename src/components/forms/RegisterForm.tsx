@@ -25,7 +25,7 @@ const RegisterForm: FC = ({}) => {
       });
 
       if (!res.ok) {
-        toast({ message: "That email can't be used", type: "danger" });
+        toast({ message: "Account with this email exist", type: "danger" });
       } else {
         toast({ message: "Account has been created", type: "success" });
       }

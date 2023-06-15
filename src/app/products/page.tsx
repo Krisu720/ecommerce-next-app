@@ -10,12 +10,7 @@ const Page = async ({}) => {
     <div>
       <Banner />
 
-      {/* Filters */}
-      <div className="flex justify-end py-6">
-        <Button>Sort by</Button>
-      </div>
-
-      <h1 className="my-3 text-4xl font-extrabold tracking-tighter">
+      <h1 className="mb-6 mt-10 text-4xl font-extrabold tracking-tighter">
         Our Products
       </h1>
 

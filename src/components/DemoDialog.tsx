@@ -4,12 +4,13 @@ import { FC } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Button from "./ui/Button";
 import { CartObject, ReduxProduct } from "@/types/types";
-import { Promocode } from "@prisma/client";
+import { Order, Promocode } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { getSubtotal, removeAll } from "@/redux/cart-slice";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
+
 interface DemoDialogProps extends CartObject {
   code: Promocode | null;
   paymentMethod: string;
@@ -30,6 +31,7 @@ const DemoDialog: FC<DemoDialogProps> = ({
   children,
   cart,
 }) => {
+
   const codeBlock = `{
     "firstName": "${firstName}",
     "lastName": "${lastName}"
@@ -46,6 +48,8 @@ const DemoDialog: FC<DemoDialogProps> = ({
   const session: any = useSession();
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
+
+
   const sumbitSuccess = async () => {
     const subtotal = getSubtotal(cart);
     const deliveryPrice = 9;
@@ -75,7 +79,7 @@ const DemoDialog: FC<DemoDialogProps> = ({
       },
       body: JSON.stringify(order),
     });
-    const data = await res.json();
+    const data:{id: string} = await res.json();
     if (res.ok) {
       router.push(`/success/${data.id}`);
       dispatch(removeAll());
@@ -83,20 +87,19 @@ const DemoDialog: FC<DemoDialogProps> = ({
   };
 
   const submitDeny = async () => {
-    dispatch(removeAll());
     router.push("/failed");
+    dispatch(removeAll());
   };
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
+    
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 h-full w-full bg-black/30" />
         <Dialog.Content className="fixed left-[50%] top-[50%] z-30 max-w-[30rem] translate-x-[-50%] translate-y-[-50%] rounded-3xl bg-white p-5">
           <Dialog.Title className="text-3xl font-bold">Demo</Dialog.Title>
           <Dialog.Description className="text-gray-500">
             This is demo version of accepting payment in stipe. Click correct
-            button which you want to innitiate stripe payment callback.
+            button which you want to resposne as a stripe callback.
           </Dialog.Description>
           <p className="mt-4">Object sent to stripe: </p>
           <pre className="rounded bg-black text-white">{codeBlock}</pre>
@@ -117,8 +120,8 @@ const DemoDialog: FC<DemoDialogProps> = ({
             </Dialog.Close>
           </div>
         </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+        </Dialog.Portal>
+      
   );
 };
 

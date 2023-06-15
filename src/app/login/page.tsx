@@ -19,7 +19,7 @@ const Page: FC<pageProps> = async ({}) => {
             <h1 className="my-4 text-3xl font-bold">Login to your account</h1>
             <LoginForm />
             <h1>
-              Don$apost have an account?
+              Don&apos;t have an account? {" "}
               <Link
                 href="/register"
                 className="font-semibold text-green-800 hover:underline"
