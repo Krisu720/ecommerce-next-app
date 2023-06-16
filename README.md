@@ -49,7 +49,7 @@ NEXTAUTH_URL=#default url for example http://localhost:3000/#
 ```
 npx prisma migrate dev
 ```
-5.Insert some products into database.
+5.Insert some products into database (you can use npx prisma studio).
 
 6.After installation run development server.
 ```
