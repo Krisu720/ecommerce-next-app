@@ -32,6 +32,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'CustomInput';
+Input.displayName = "CustomInput";
 
 export default Input;

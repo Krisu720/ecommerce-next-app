@@ -44,12 +44,12 @@ const Page: FC = ({}) => {
         checkedEmpty = true;
       }
     }
-    if (!checkedEmpty) {
+    if (!checkedEmpty && cart.length > 0 && getSubtotal(cart) - (code ? code?.price : 0) > 0) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [value]);
+  }, [value,cart,code]);
 
   const setCartObject = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const name = e.target.name;
@@ -116,10 +116,10 @@ const Page: FC = ({}) => {
                   <p className="font-semibold">Subtotal</p>
                   <p className="font-semibold">{getSubtotal(cart)}zł</p>
                 </div>
-                <div className="flex justify-between">
+              { cart.length > 0 && <div className="flex justify-between">
                   <p className="font-semibold">Delivery</p>
                   <p className="font-semibold">{deliveryPrice}zł</p>
-                </div>
+                </div>}
                 {code && (
                   <div className="flex justify-between">
                     <p className="font-semibold">
@@ -133,16 +133,15 @@ const Page: FC = ({}) => {
               <div className="flex justify-between pt-2">
                 <p className="font-extrabold">Total</p>
                 <p className="font-extrabold">
-                  {getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0)}
-                  zł
+                  {cart.length > 0 ? getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0)+"zł" : 0+"zł"}
+                  
                 </p>
               </div>
               <Dialog.Root>
               <Dialog.Trigger asChild>
                 <Button disabled={disabled} className="mt-3 w-full py-3">
                   Pay{" "}
-                  {getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0)}
-                  zł
+                  {cart.length > 0 && code?.price ? getSubtotal(cart) + deliveryPrice - (code ? code?.price : 0) +"zł" : ""}
                 </Button>
               </Dialog.Trigger>
               <DemoDialog
