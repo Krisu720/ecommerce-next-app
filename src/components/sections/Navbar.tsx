@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import NavbarClientButtons from "./NavbarClientButtons";
+import NavbarClientButtons from "../NavbarClientButtons";
 import MoblieNavbar from "./MoblieNavbar";
 
 const navs = [

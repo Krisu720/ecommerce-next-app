@@ -3,7 +3,6 @@
 import { ReduxProduct } from "@/types/types";
 
 const getLocalStorageCart = (): ReduxProduct[] => {
-  "use client"
   //getting data from local storage
   const get = localStorage.getItem("cart");
   if (get) {

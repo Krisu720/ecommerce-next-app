@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { prisma } from "./prismaSingleton";
 
 export const getProductById = async (id: string) => {

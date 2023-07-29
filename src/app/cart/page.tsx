@@ -9,7 +9,7 @@ import { getSubtotal } from "@/redux/cart-slice";
 import CartItem from "@/components/CartItem";
 import { Promocode } from "@prisma/client";
 import useToaster from "@/lib/useToaster";
-import DemoDialog from "@/components/DemoDialog";
+import DemoDialog from "@/components/sections/DemoDialog";
 import { CartObject } from "@/types/types";
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -38,13 +38,13 @@ const Page: FC = ({}) => {
 
   useEffect(() => {
     //checking if something from value has empty string if true set button disabled
-    let checkedEmpty = false;
+    let isNotEmpty = false;
     for (const [key, val] of Object.entries(value)) {
       if (val === "") {
-        checkedEmpty = true;
+        isNotEmpty = true;
       }
     }
-    if (!checkedEmpty && cart.length > 0 && getSubtotal(cart) - (code ? code?.price : 0) > 0) {
+    if (!isNotEmpty && cart.length > 0 && getSubtotal(cart) - (code ? code?.price : 0) > 0) {
       setDisabled(false);
     } else {
       setDisabled(true);

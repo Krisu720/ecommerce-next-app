@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, current } from "@reduxjs/toolkit";
 import { Product } from "@prisma/client";
 import { v4 as uuid4 } from "uuid";
-import { getLocalStorageCart, updateLocalStorageCart } from "./cartPersist";
+import { updateLocalStorageCart } from "./cartPersist";
 import { ReduxProduct } from "@/types/types";
 
 
@@ -101,7 +101,7 @@ export const cart = createSlice({
         ...current(state.value.products),
       ];
 
-      //if product with uuid in params exist return products without this product
+      //if product with the same uuid exist return products without this product
       const changedProducts = currentProducts.filter(
         (i) => i.uuid !== action.payload.uuid
       );

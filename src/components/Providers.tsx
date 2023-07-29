@@ -2,7 +2,7 @@
 
 import { SessionProvider } from "next-auth/react";
 import { FC } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { store } from "@/redux/store";
 
 interface ProvidersProps {
