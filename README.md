@@ -1,3 +1,5 @@
+<img src="https://utfs.io/f/ff7416e4-248b-4bb6-b459-365314a2a7d6_shopy.png"/>
+
 ## Demo
 
 https://ecommerce-next-app-krisu720.vercel.app/
